@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "Se você usar este software, por favor cite-o da seguinte forma."
+type: software
+title: "IA RESEARCH: DELTA H — Validação Empírica do Gap Topológico Narrativo"
+authors:
+  - family-names: "Soares"
+    given-names: "Euzébio"
+    alias: "ebiossanto"
+year: 2026
+license: MIT
+repository-code: "https://github.com/ebiossanto/IA-RESEARCH-DELTA-H"
+abstract: >-
+  Validação empírica do Gap Topológico Narrativo (ΔT): relação entre
+  estrutura semântica global de textos e compreensão de leitores.
+  Utiliza Análise Topológica de Dados (TDA), homologia persistente e
+  embeddings semânticos para medir a discrepância entre a estrutura
+  global de um texto e a estrutura acessível em uma janela local de leitura.
+keywords:
+  - topological data analysis
+  - persistent homology
+  - narrative gap
+  - reading comprehension
+  - natural language processing
+  - sentence embeddings
+  - entropy
+  - computational linguistics

@@ -1,8 +1,30 @@
 # Projeto de Pesquisa: **Delta H**
 
+![Banner](banner.png)
+
 **Título completo:** Delta H — Validação Empírica do Gap Topológico Narrativo (ΔT): Relação entre Estrutura Semântica Global e Compreensão de Leitores
 
 > O nome oficial do trabalho é **Delta H**. Pasta, `README.md`, `paper/main.tex` e o título do documento original já foram corrigidos.
+
+> **Nota:** Este é um projeto de estudos e pesquisa desenvolvido com ferramentas de inteligência artificial. O autor é um estudante, entusiasta e pesquisador.
+
+---
+
+## Citation
+
+Se você usar este software em sua pesquisa, por favor cite:
+
+```bibtex
+@software{ia_research_delta_h,
+  author = {Soares, Euzébio},
+  title = {IA RESEARCH: DELTA H — Validação Empírica do Gap Topológico Narrativo},
+  year = {2026},
+  url = {https://github.com/ebiossanto/IA-RESEARCH-DELTA-H},
+  license = {MIT}
+}
+```
+
+Consulte [`CITATION.cff`](CITATION.cff) para mais detalhes.
 
 ---
 
