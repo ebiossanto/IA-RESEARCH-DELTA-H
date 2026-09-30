@@ -1,0 +1,92 @@
+{
+  "alice_wonderland": {
+    "gutenberg_id": 11,
+    "idioma": "en",
+    "nivel": "simples",
+    "titulo": "Alice's Adventures in Wonderland",
+    "palavras": 26525,
+    "bytes": 154333,
+    "origem": "cache local",
+    "url": "https://www.gutenberg.org/ebooks/11"
+  },
+  "perolas_infantis": {
+    "gutenberg_id": 30510,
+    "idioma": "pt",
+    "nivel": "simples",
+    "titulo": "Pérolas e Diamantes: Contos Infantis",
+    "palavras": 12706,
+    "bytes": 79370,
+    "origem": "cache local",
+    "url": "https://www.gutenberg.org/ebooks/30510"
+  },
+  "dom_casmurro": {
+    "gutenberg_id": 55752,
+    "idioma": "pt",
+    "nivel": "intermediario",
+    "titulo": "Dom Casmurro",
+    "palavras": 65707,
+    "bytes": 397269,
+    "origem": "cache local",
+    "url": "https://www.gutenberg.org/ebooks/55752"
+  },
+  "hamlet": {
+    "gutenberg_id": 1524,
+    "idioma": "en",
+    "nivel": "intermediario",
+    "titulo": "Hamlet",
+    "palavras": 31960,
+    "bytes": 187104,
+    "origem": "cache local",
+    "url": "https://www.gutenberg.org/ebooks/1524"
+  },
+  "ulysses": {
+    "gutenberg_id": 4300,
+    "idioma": "en",
+    "nivel": "complexo",
+    "titulo": "Ulysses",
+    "palavras": 265059,
+    "bytes": 1566249,
+    "origem": "cache local",
+    "url": "https://www.gutenberg.org/ebooks/4300"
+  },
+  "o_guarany_v1": {
+    "gutenberg_id": 67724,
+    "idioma": "pt",
+    "nivel": "complexo",
+    "titulo": "O Guarany (vol. 1)",
+    "palavras": 56975,
+    "bytes": 352454,
+    "origem": "cache local",
+    "url": "https://www.gutenberg.org/ebooks/67724"
+  },
+  "memorias_braz_cubas": {
+    "gutenberg_id": 54829,
+    "idioma": "pt",
+    "nivel": "intermediario",
+    "titulo": "Memórias Póstumas de Brás Cubas",
+    "palavras": 61549,
+    "bytes": 381571,
+    "origem": "download",
+    "url": "https://www.gutenberg.org/ebooks/54829"
+  },
+  "metamorphosis": {
+    "gutenberg_id": 5200,
+    "idioma": "en",
+    "nivel": "simples",
+    "titulo": "The Metamorphosis",
+    "palavras": 21935,
+    "bytes": 121600,
+    "origem": "cache local",
+    "url": "https://www.gutenberg.org/ebooks/5200"
+  },
+  "quincas_borba": {
+    "gutenberg_id": 55682,
+    "idioma": "pt",
+    "nivel": "complexo",
+    "titulo": "Quincas Borba",
+    "palavras": 76026,
+    "bytes": 471141,
+    "origem": "download",
+    "url": "https://www.gutenberg.org/ebooks/55682"
+  }
+}

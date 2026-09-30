@@ -1,0 +1,53 @@
+[
+  {
+    "obra": "alice_wonderland",
+    "nivel": "simples",
+    "idioma": "en",
+    "titulo": "Alice's Adventures in Wonderland",
+    "n_sentencas": 1376,
+    "n_janelas_total": 325,
+    "eps": 0.4772210121154785,
+    "frac_pares_conectados": 0.045654618473895583,
+    "H_global": 5.549071970046107,
+    "C_global": 112.0,
+    "Cpers_global": 99.84041978901638,
+    "n_barras_global": 327,
+    "beta_global": "[64, 24, 0]",
+    "embedder": "sbert",
+    "segundos": 34.0
+  },
+  {
+    "obra": "dom_casmurro",
+    "nivel": "intermediario",
+    "idioma": "pt",
+    "titulo": "Dom Casmurro",
+    "n_sentencas": 3696,
+    "n_janelas_total": 811,
+    "eps": 0.4684576392173767,
+    "frac_pares_conectados": 0.01808835341365462,
+    "H_global": 5.599045690149195,
+    "C_global": 175.0,
+    "Cpers_global": 106.74362841301682,
+    "n_barras_global": 350,
+    "beta_global": "[63, 56, 0]",
+    "embedder": "sbert",
+    "segundos": 81.7
+  },
+  {
+    "obra": "hamlet",
+    "nivel": "intermediario",
+    "idioma": "en",
+    "titulo": "Hamlet",
+    "n_sentencas": 3427,
+    "n_janelas_total": 401,
+    "eps": 0.5012147426605225,
+    "frac_pares_conectados": 0.07100401606425703,
+    "H_global": 5.316628655354978,
+    "C_global": 122.0,
+    "Cpers_global": 87.26575099600748,
+    "n_barras_global": 250,
+    "beta_global": "[64, 29, 0]",
+    "embedder": "sbert",
+    "segundos": 49.7
+  }
+]

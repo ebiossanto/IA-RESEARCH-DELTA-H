@@ -1,0 +1,469 @@
+﻿<!DOCTYPE html><html><head><meta charset='utf-8'><style>body{font-family:Georgia,serif;max-width:800px;margin:40px auto;line-height:1.8;color:#333}h1{color:#2c3e50;border-bottom:3px solid #3498db;padding-bottom:10px}h2{color:#34495e;border-bottom:1px solid #bdc3c7;padding-bottom:5px;margin-top:30px}h3{color:#7f8c8d;margin-top:20px}table{border-collapse:collapse;width:100%;margin:15px 0}th,td{border:1px solid #ddd;padding:8px 12px;text-align:left}th{background-color:#3498db;color:white}tr:nth-child(even){background-color:#f2f2f2}code{background:#f4f4f4;padding:2px 6px;border-radius:3px;font-family:Consolas,monospace}pre{background:#f8f8f8;padding:15px;border-left:4px solid #3498db;overflow-x:auto}blockquote{border-left:4px solid #3498db;margin:0;padding-left:15px;color:#666;font-style:italic}strong{color:#2c3e50}</style></head><body><h1>Delta H — Resumo Acessível</h1>
+<br>
+<h2>Para que serve este documento?</h2>
+<br>
+<p>Este documento explica, em linguagem simples, o que é o projeto <strong>Delta H</strong>, o que estamos calculando, por que isso importa e como será feita a coleta de dados com leitores. Não é necessário conhecimento prévio de matemática ou programação.</p>
+<br>
+<hr>
+<br>
+<h2>1. A ideia central (em uma frase)</h2>
+<br>
+<p><strong>Queremos medir o quanto um texto é "difícil de entender" analisando a estrutura do texto — não apenas o vocabulário — e verificar se essa medida prevê o desempenho de leitores reais.</strong></p>
+<br>
+<hr>
+<br>
+<h2>2. O problema que motiva o trabalho</h2>
+<br>
+<h3>2.1 Como se mede a dificuldade de um texto hoje?</h3>
+<br>
+<p>Os métodos tradicionais (Flesch-Kincaid, por exemplo) contam:</p>
+<ul><li>Número de palavras por frase</li></ul>
+<ul><li>Número de sílabas por palavra</li></ul>
+<ul><li>Frequência de palavras no vocabulário</li></ul>
+<br>
+<p><strong>Problema:</strong> Esses métodos ignoram a <strong>estrutura do texto</strong> — como as ideias se conectam, como o texto se organiza em cenas, como a narrativa se desenvolve.</p>
+<br>
+<h3>2.2 O que queremos medir?</h3>
+<br>
+<p>Queremos medir algo diferente: <strong>a distância entre a estrutura global do texto e a estrutura que o leitor consegue ver em um trecho específico</strong>.</p>
+<br>
+<p><strong>Exemplo intuitivo:</strong></p>
+<ul><li>Imagine um romance com 10 capítulos. Cada capítulo tem uma "cena" com personagens, diálogos e descrições.</li></ul>
+<ul><li>Se você lê **apenas um parágrafo**, vê uma pequena parte da história — um fragmento.</li></ul>
+<ul><li>Se você lê **um capítulo inteiro**, vê uma sequência completa de cenas — uma estrutura mais rica.</li></ul>
+<ul><li>Se você lê **o livro inteiro**, vê todas as conexões entre personagens, temas e eventos — a estrutura completa.</li></ul>
+<br>
+<p><strong>A hipótese:</strong> Quanto maior a diferença entre o que o leitor vê (trecho) e a estrutura completa do texto, mais difícil é para o leitor entender a história.</p>
+<br>
+<hr>
+<br>
+<h2>3. O que estamos calculando?</h2>
+<br>
+<h3>3.1 A metáfora do "mapa"</h3>
+<br>
+<p>Pense no texto como um <strong>mapa de uma cidade</strong>:</p>
+<br>
+<table>
+<tr>
+<th>Conceito</th>
+<th>Metáfora</th>
+<th>No texto</th>
+</tr>
+<tr>
+<td>**Estrutura global**</td>
+<td>O mapa completo da cidade</td>
+<td>Todas as frases do texto, com suas conexões</td>
+</tr>
+<tr>
+<td>**Estrutura local**</td>
+<td>O que você vê da janela de um prédio</td>
+<td>Um trecho específico que o leitor está lendo</td>
+</tr>
+<tr>
+<td>**Gap (Δ)**</td>
+<td>A diferença entre o mapa e a vista da janela</td>
+<td>A diferença entre a estrutura completa e o trecho</td>
+</tr>
+</table>
+<br>
+<h3>3.2 Como calculamos isso?</h3>
+<br>
+<p>Usamos uma técnica matemática chamada <strong>Análise Topológica de Dados (TDA)</strong>. Em termos simples:</p>
+<br>
+<p>1. <strong>Transformamos cada frase em um ponto</strong> no espaço (usando inteligência artificial para entender o significado das frases)</p>
+<p>2. <strong>Conectamos os pontos</strong> que são parecidos (frases com significado semelhante ficam próximas)</p>
+<p>3. <strong>Analisamos a forma</strong> dessa rede de conexões:</p>
+<p>   - Quantos "aglomerados" de frases existem?</p>
+<p>   - Quantos "ciclos" (ideias que se conectam de formas diferentes) existem?</p>
+<p>   - Como essas estruturas variam em diferentes escalas?</p>
+<p>4. <strong>Comparamos</strong> a estrutura do trecho (o que o leitor vê) com a estrutura de um pedaço aleatório do mesmo tamanho (para controlar o efeito do tamanho do trecho)</p>
+<br>
+<h3>3.3 O resultado: Delta H (ΔH)</h3>
+<br>
+<p>O <strong>Delta H</strong> é um número que mede <strong>quanto a estrutura do trecho difere da estrutura esperada</strong> de um pedaço aleatório do mesmo texto.</p>
+<br>
+<ul><li>**ΔH alto** = o trecho tem uma estrutura muito diferente do esperado (mais "conectado" ou mais "fragmentado")</li></ul>
+<ul><li>**ΔH baixo** = o trecho tem uma estrutura parecida com a de um pedaço aleatório</li></ul>
+<br>
+<h3>3.4 O que o Delta H **não** é</h3>
+<br>
+<ul><li>**Não é** uma medida de dificuldade léxica (palavras difíceis)</li></ul>
+<ul><li>**Não é** uma medida de tamanho do texto</li></ul>
+<ul><li>**Não é** uma medida de qualidade literária</li></ul>
+<br>
+<hr>
+<br>
+<h2>4. Por que isso importa? (Pertinência)</h2>
+<br>
+<h3>4.1 Para a educação</h3>
+<ul><li>**Avaliação de textos:** Podemos identificar trechos que são "difíceis" não por causa do vocabulário, mas por causa da estrutura narrativa</li></ul>
+<ul><li>**Adaptação de materiais:** Podemos sugerir adaptações de textos para diferentes níveis de leitores</li></ul>
+<ul><li>**Ensino de leitura:** Podemos ensinar leitores a identificar estruturas narrativas complexas</li></ul>
+<br>
+<h3>4.2 Para a ciência</h3>
+<ul><li>**Nova métrica:** O Delta H é uma medida objetiva e matemática de "complexidade estrutural" de um texto</li></ul>
+<ul><li>**Compreensão de leitura:** Podemos testar se a estrutura do texto prevê a compreensão melhor que medidas tradicionais</li></ul>
+<ul><li>**Interdisciplinaridade:** O projeto conecta matemática, ciência da computação e linguística</li></ul>
+<br>
+<h3>4.3 Para a sociedade</h3>
+<ul><li>**Acessibilidade:** Textos complexos podem ser identificados e adaptados para pessoas com dificuldades de leitura</li></ul>
+<ul><li>**Tradução:** A estrutura topológica pode ajudar a avaliar se uma tradução preserva a estrutura narrativa original</li></ul>
+<ul><li>**Preservação cultural:** Podemos analisar como a estrutura narrativa varia entre culturas e épocas</li></ul>
+<br>
+<hr>
+<br>
+<h2>5. O que é original neste trabalho? (Originalidade)</h2>
+<br>
+<h3>5.1 Primeira aplicação de TDA à compreensão de leitura</h3>
+<p>Até onde sabemos, este é o <strong>primeiro estudo</strong> a usar Análise Topológica de Dados para prever compreensão de leitura.</p>
+<br>
+<h3>5.2 Nova métrica: entropia persistente</h3>
+<p>A definição de Delta H como <strong>entropia sobre comprimentos de barra</strong> (em vez de perfil de Betti) é uma contribuição original ao campo de TDA.</p>
+<br>
+<h3>5.3 Descoberta da inversão de sinal</h3>
+<p>Descobrimos que o sinal do gap <strong>inverte</strong> entre escalas:</p>
+<ul><li>**Janela curta (250 palavras):** O trecho tem **menos** estrutura que um pedaço aleatório (ΔH negativo)</li></ul>
+<ul><li>**Trecho longo (4000 palavras):** O trecho tem **mais** estrutura que um pedaço aleatório (ΔH positivo)</li></ul>
+<br>
+<p>Essa inversão é mecanicamente explicada e foi uma descoberta nova.</p>
+<br>
+<h3>5.4 Desenho experimental rigoroso</h3>
+<p>O projeto usa:</p>
+<ul><li>**Referência casada por tamanho:** Comparação com pedaços aleatórios do mesmo tamanho (não com a obra inteira)</li></ul>
+<ul><li>**Teste união-interseção:** Só declaramos suporte se duas métricas independentes concordarem</li></ul>
+<ul><li>**Pré-registro:** Todas as decisões são congeladas antes de ver dados de leitores</li></ul>
+<br>
+<hr>
+<br>
+<h2>6. O que já foi feito?</h2>
+<br>
+<h3>6.1 Fase 1 — Pipeline e corpus ✅</h3>
+<ul><li>9 obras do Project Gutenberg baixadas e verificadas</li></ul>
+<ul><li>Pipeline completo funcionando (frases → embeddings → topologia → métricas)</li></ul>
+<ul><li>Figuras geradas</li></ul>
+<br>
+<h3>6.2 Fase 2 — Piloto computacional ✅ (quase concluída)</h3>
+<ul><li>7 rodadas computacionais executadas (7.446 janelas + 150 segmentos)</li></ul>
+<ul><li>9 decisões congeladas (forma da métrica, escala, controles, etc.)</li></ul>
+<ul><li>Controles C1–C5 executados e verificados</li></ul>
+<ul><li>Análises de sensibilidade completadas</li></ul>
+<br>
+<h3>6.3 Resultados preliminares</h3>
+<ul><li>**Sinal negativo em 9/9 obras** na escala de janela (p ≤ 1,4×10⁻²²)</li></ul>
+<ul><li>**Sinal positivo em 72,7% dos segmentos** na escala de trecho (p = 1,3×10⁻⁸)</li></ul>
+<ul><li>**Controles robustos:** C1 (4,63×), C2 (25,59×)</li></ul>
+<ul><li>**Concordância entre métricas:** ρ = −0,724</li></ul>
+<br>
+<hr>
+<br>
+<h2>7. O que falta fazer?</h2>
+<br>
+<h3>7.1 Fase 2 — Robustez de embedding (pendente)</h3>
+<ul><li>Testar o pipeline com outros modelos de embedding (LaBSE, fastText)</li></ul>
+<ul><li>Verificar se o sinal do gap é consistente entre modelos</li></ul>
+<br>
+<h3>7.2 Fase 3 — Pré-registro</h3>
+<ul><li>Escrever o documento de pré-registro (NT-03)</li></ul>
+<ul><li>Congelar todas as decisões estatísticas</li></ul>
+<br>
+<h3>7.3 Fase 4 — Piloto de calibração</h3>
+<ul><li>Testar o questionário com 5–10 leitores</li></ul>
+<ul><li>Ajustar o procedimento de coleta</li></ul>
+<br>
+<h3>7.4 Fase 5 — Coleta completa</h3>
+<ul><li>54 leitores × 2 trechos = 108 observações</li></ul>
+<ul><li>Cada trecho lido exatamente 3 vezes</li></ul>
+<br>
+<h3>7.5 Fase 6 — Artigo</h3>
+<ul><li>Análise multinível</li></ul>
+<ul><li>Escrita do artigo científico</li></ul>
+<br>
+<hr>
+<br>
+<h2>8. Guia de Coleta de Dados com Leitores</h2>
+<br>
+<h3>8.1 Visão geral</h3>
+<br>
+<table>
+<tr>
+<th>Elemento</th>
+<th>Especificação</th>
+</tr>
+<tr>
+<td>**Participantes**</td>
+<td>54 leitores</td>
+</tr>
+<tr>
+<td>**Trechos**</td>
+<td>36 trechos (18 alto-Δ + 18 baixo-Δ)</td>
+</tr>
+<tr>
+<td>**Obras**</td>
+<td>6 obras (2 simples, 2 intermediárias, 2 complexas)</td>
+</tr>
+<tr>
+<td>**Observações**</td>
+<td>108 (54 leitores × 2 trechos)</td>
+</tr>
+<tr>
+<td>**Por trecho**</td>
+<td>3 leitores diferentes</td>
+</tr>
+<tr>
+<td>**Duração**</td>
+<td>~30–40 min por leitor</td>
+</tr>
+</table>
+<br>
+<h3>8.2 Critérios de inclusão para leitores</h3>
+<br>
+<p><strong>Inclusão:</strong></p>
+<ul><li>Idade ≥ 18 anos</li></ul>
+<ul><li>Ensino médio completo ou superior</li></ul>
+<ul><li>Leitor habitual (lê pelo menos 1 livro por mês)</li></ul>
+<ul><li>Português ou inglês nativo ou fluente</li></ul>
+<br>
+<p><strong>Exclusão:</strong></p>
+<ul><li>Dificuldade visual não corrigida</li></ul>
+<ul><li>Distúrbio de leitura diagnosticado (dislexia, etc.)</li></ul>
+<ul><li>Participação em estudos similares nos últimos 6 meses</li></ul>
+<br>
+<h3>8.3 Os 36 trechos</h3>
+<br>
+<p>Os trechos foram selecionados automaticamente com base no valor de Delta H:</p>
+<br>
+<table>
+<tr>
+<th>Tipo</th>
+<th>Quantidade</th>
+<th>Descrição</th>
+</tr>
+<tr>
+<td>**Alto-Δ**</td>
+<td>18 trechos</td>
+<td>Trechos com estrutura muito diferente do esperado</td>
+</tr>
+<tr>
+<td>**Baixo-Δ**</td>
+<td>18 trechos</td>
+<td>Trechos com estrutura parecida com a de um pedaço aleatório</td>
+</tr>
+</table>
+<br>
+<p><strong>Distribuição por obra:</strong></p>
+<br>
+<table>
+<tr>
+<th>Nível</th>
+<th>Obras</th>
+<th>Trechos</th>
+</tr>
+<tr>
+<td>Simples</td>
+<td>Alice's Adventures in Wonderland, The Metamorphosis</td>
+<td>6 + 4 = 10</td>
+</tr>
+<tr>
+<td>Intermediário</td>
+<td>Dom Casmurro, Memórias Póstumas de Brás Cubas</td>
+<td>6 + 6 = 12</td>
+</tr>
+<tr>
+<td>Complexo</td>
+<td>Ulysses, Quincas Borba</td>
+<td>8 + 6 = 14</td>
+</tr>
+</table>
+<br>
+<h3>8.4 Atribuição de trechos a leitores</h3>
+<br>
+<p>Cada leitor recebe <strong>2 trechos</strong> de níveis diferentes:</p>
+<br>
+<table>
+<tr>
+<th>Par</th>
+<th>Quantidade</th>
+<th>Descrição</th>
+</tr>
+<tr>
+<td>**SI** (Simples + Intermediário)</td>
+<td>12 leitores</td>
+<td>1 trecho simples + 1 trecho intermediário</td>
+</tr>
+<tr>
+<td>**SC** (Simples + Complexo)</td>
+<td>18 leitores</td>
+<td>1 trecho simples + 1 trecho complexo</td>
+</tr>
+<tr>
+<td>**IC** (Intermediário + Complexo)</td>
+<td>24 leitores</td>
+<td>1 trecho intermediário + 1 trecho complexo</td>
+</tr>
+<tr>
+<td>**Total**</td>
+<td>**54 leitores**</td>
+<td>**108 observações**</td>
+</tr>
+</table>
+<br>
+<h3>8.5 Procedimento de coleta</h3>
+<br>
+<p>#### Passo 1 — Preparação</p>
+<p>1. Verificar se o leitor atende aos critérios de inclusão</p>
+<p>2. Obter consentimento informado (assinado)</p>
+<p>3. Coletar dados demográficos:</p>
+<p>   - Idade</p>
+<p>   - Escolaridade (anos de estudo)</p>
+<p>   - Familiaridade com literatura (auto-relato + teste objetivo)</p>
+<br>
+<p>#### Passo 2 — Leitura</p>
+<p>1. Apresentar o primeiro trecho (4000 palavras, ~20–30 min de leitura)</p>
+<p>2. O leitor lê o trecho em silêncio</p>
+<p>3. O leitor pode fazer anotações, mas não pode voltar ao texto durante o questionário</p>
+<br>
+<p>#### Passo 3 — Questionário</p>
+<p>Após a leitura, o leitor responde:</p>
+<br>
+<p><strong>5 itens locais</strong> (sobre o trecho lido):</p>
+<p>1. Quem falou neste trecho?</p>
+<p>2. Onde ocorreu a cena principal?</p>
+<p>3. Qual foi o evento principal?</p>
+<p>4. Quem eram os personagens presentes?</p>
+<p>5. O que aconteceu antes/depois deste trecho?</p>
+<br>
+<p><strong>5 itens globais</strong> (sobre a estrutura do trecho):</p>
+<p>1. Qual é o tema central deste trecho?</p>
+<p>2. Como os eventos se conectam?</p>
+<p>3. Qual é o conflito principal?</p>
+<p>4. Como os personagens se relacionam?</p>
+<p>5. Qual é a mensagem ou ideia principal?</p>
+<br>
+<p><strong>Escala:</strong> 4 alternativas (múltipla escolha), com piso corrigido por sorte (0,25)</p>
+<br>
+<p>#### Passo 4 — Segunda leitura</p>
+<p>1. Apresentar o segundo trecho (mesmo procedimento)</p>
+<p>2. Aplicar o questionário novamente</p>
+<br>
+<p>#### Passo 5 — Encerramento</p>
+<p>1. Agradecer ao leitor</p>
+<p>2. Registrar dados da sessão</p>
+<p>3. Anonimizar dados (conforme LGPD)</p>
+<br>
+<h3>8.6 Cálculo do escore (S)</h3>
+<br>
+<p>O escore de compreensão é calculado como:</p>
+<br>
+<pre><code>
+S = 0,3 × S_local + 0,7 × S_global
+</code></pre>
+<br>
+<p>Onde:</p>
+<ul><li>**S_local** = média dos 5 itens locais (corrigida por sorte)</li></ul>
+<ul><li>**S_global** = média dos 5 itens globais (corrigida por sorte)</li></ul>
+<br>
+<p><strong>Correção por sorte:</strong></p>
+<pre><code>
+S_corrigido = (acertos - 0,25) / 0,75
+</code></pre>
+<br>
+<p>Isso corrige o fato de que, com 4 alternativas, um leitor que chuta aleatoriamente acerta 25% das questões.</p>
+<br>
+<h3>8.7 Análise estatística</h3>
+<br>
+<p><strong>Modelo principal:</strong></p>
+<pre><code>
+S_ij = a_obra(j) - b × Δ_gap(j) + c1 × Escolaridade + c2 × Idade + c3 × Familiaridade + ε
+</code></pre>
+<br>
+<p>Onde:</p>
+<ul><li>**S_ij** = escore do leitor i no trecho j</li></ul>
+<ul><li>**a_obra(j)** = efeito fixo por obra (intercepto diferente para cada obra)</li></ul>
+<ul><li>**Δ_gap** = ln(1 + |z_H|) — o preditor principal</li></ul>
+<ul><li>**b** = coeficiente que testamos (H0: b = 0 vs H1: b > 0)</li></ul>
+<br>
+<p><strong>Teste união-interseção:</strong></p>
+<ul><li>Só declaramos suporte à teoria se **ambas** as métricas (ΔH e d_B) rejeitarem H0 a α = 0,05</li></ul>
+<br>
+<h3>8.8 Considerações éticas</h3>
+<br>
+<ul><li>**Consentimento informado:** Todos os leitores assinam um termo de consentimento</li></ul>
+<ul><li>**Anonimização:** Dados são anonimizados conforme LGPD</li></ul>
+<ul><li>**Voluntariedade:** O leitor pode desistir a qualquer momento</li></ul>
+<ul><li>**Compensação:** A definir (se aplicável)</li></ul>
+<ul><li>**Aprovação ética:** O projeto deve ser aprovado por um Comitê de Ética em Pesquisa (CEP)</li></ul>
+<br>
+<hr>
+<br>
+<h2>9. Perguntas frequentes</h2>
+<br>
+<h3>P: O que é "entropia persistente"?</h3>
+<p>R: É uma medida matemática que quantifica a "heterogeneidade" das estruturas em um diagrama de persistência. Em termos simples, mede quantas "escalas" diferentes de estrutura existem no texto.</p>
+<br>
+<h3>P: Por que 4000 palavras?</h3>
+<p>R: Porque é o tamanho mínimo para que a estrutura topológica seja estável. Trechos mais curtos têm estruturas muito instáveis (muito sensíveis a pequenas mudanças).</p>
+<br>
+<h3>P: Por que 54 leitores?</h3>
+<p>R: Porque o cálculo de poder amostral indicou que 108 observações (54 leitores × 2 trechos) são suficientes para detectar um efeito moderado (|r| ≈ 0,45) com 80% de poder.</p>
+<br>
+<h3>P: O que acontece se a hipótese não for confirmada?</h3>
+<p>R: Isso é um resultado legítimo e será publicado. A ciência avança também com resultados negativos.</p>
+<br>
+<h3>P: Posso usar o Delta H para avaliar meus próprios textos?</h3>
+<p>R: Ainda não. O Delta H está em fase de validação. Após a confirmação, ele pode se tornar uma ferramenta útil para educadores e editores.</p>
+<br>
+<hr>
+<br>
+<h2>10. Resumo visual</h2>
+<br>
+<pre><code>
+┌─────────────────────────────────────────────────────────────┐
+│                    FLUXO DO PROJETO                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  1. Texto completo  →  Embeddings  →  Diagrama global      │
+│                                    (estrutura completa)     │
+│                                                             │
+│  2. Trecho (4000 pal)  →  Embeddings  →  Diagrama local    │
+│                                       (estrutura do trecho)│
+│                                                             │
+│  3. Referência aleatória  →  Diagrama de referência        │
+│     (mesmo tamanho)        (esperado para um pedaço        │
+│                             aleatório do mesmo texto)       │
+│                                                             │
+│  4. Comparação:                                            │
+│     ΔH = |H(trecho) - H(referência)|                      │
+│                                                             │
+│  5. Coleta com leitores:                                   │
+│     - 54 leitores × 2 trechos = 108 observações            │
+│     - Questionário: 5 itens locais + 5 itens globais       │
+│     - Escore S = 0,3×S_local + 0,7×S_global               │
+│                                                             │
+│  6. Análise:                                               │
+│     S = a - b×ΔH + covariáveis                             │
+│     H0: b = 0  vs  H1: b &gt; 0                               │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<br>
+<hr>
+<br>
+<h2>11. Contato e referências</h2>
+<br>
+<p><strong>Projeto:</strong> Delta H — Validação Empírica do Gap Topológico Narrativo</p>
+<br>
+<p><strong>Documentos técnicos:</strong></p>
+<ul><li>NT-01: Estado do Projeto e Escolha da Métrica Primária</li></ul>
+<ul><li>NT-02: Relatório do Piloto Computacional e Congelamento da Forma da Métrica</li></ul>
+<br>
+<p><strong>Referências principais:</strong></p>
+<ul><li>Chazal, Cohen-Steiner, Mérigot — *Persistence-based clustering / stability of Rips*</li></ul>
+<ul><li>Edelsbrunner, Harer — *Computational Topology: An Introduction*</li></ul>
+<ul><li>Munch, Wang — *Applied Topological Data Analysis*</li></ul>
+<ul><li>Green, S. B. (1991) — *How many subjects does it take to do a regression analysis?*</li></ul>
+<ul><li>Gelman & Hill — *Data Analysis Using Regression and Multilevel/Hierarchical Models*</li></ul>
+<br>
+<hr>
+<br>
+<p><em>Documento gerado em 28/09/2026. Projeto em Fase 2 (piloto computacional).</em></p>
+<br></body></html>

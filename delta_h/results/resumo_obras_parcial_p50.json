@@ -1,0 +1,36 @@
+[
+  {
+    "obra": "memorias_braz_cubas",
+    "nivel": "intermediario",
+    "idioma": "pt",
+    "titulo": "Memórias Póstumas de Brás Cubas",
+    "n_sentencas": 3151,
+    "n_janelas_total": 758,
+    "eps": 0.409423291683197,
+    "frac_pares_conectados": 0.0072610441767068275,
+    "H_global": 5.513380627254892,
+    "C_global": 181.0,
+    "Cpers_global": 94.51989774579494,
+    "n_barras_global": 280,
+    "beta_global": "[125, 28, 0]",
+    "embedder": "sbert",
+    "segundos": 197.7
+  },
+  {
+    "obra": "quincas_borba",
+    "nivel": "complexo",
+    "idioma": "pt",
+    "titulo": "Quincas Borba",
+    "n_sentencas": 4736,
+    "n_janelas_total": 948,
+    "eps": 0.4310796856880188,
+    "frac_pares_conectados": 0.006618473895582329,
+    "H_global": 5.518914666097172,
+    "C_global": 140.0,
+    "Cpers_global": 99.78639799553123,
+    "n_barras_global": 263,
+    "beta_global": "[126, 7, 0]",
+    "embedder": "sbert",
+    "segundos": 184.5
+  }
+]
